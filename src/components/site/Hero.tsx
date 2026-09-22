@@ -85,7 +85,7 @@ export function Hero() {
               <span className="hero-line block">
                 <span
                   className="text-transparent"
-                  style={{ WebkitTextStroke: "1.5px hsl(var(--foreground))" }}
+                  style={{ WebkitTextStroke: "1.5px var(--foreground)" }}
                 >
                   The
                 </span>{" "}
