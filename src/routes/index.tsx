@@ -74,7 +74,6 @@ function Index() {
         <Hero />
         <Intro />
         <ServicesList />
-        <HorizontalServices />
         <Work />
         <Stats />
         <About />
