@@ -130,8 +130,6 @@ export function Hero() {
         </div>
       </div>
 
-      </div>
-
       {/* technical footer */}
       <div className="relative z-10 flex items-end justify-between px-5 pb-10 md:px-10">
         <div className="flex gap-8 font-mono text-[10px] uppercase text-muted-foreground">
