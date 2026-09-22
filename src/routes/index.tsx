@@ -13,7 +13,6 @@ import {
   Certifications,
   Contact,
   Footer,
-  HorizontalServices,
   Intro,
   Process,
   Production,
