@@ -71,39 +71,39 @@ export function Hero() {
       <div className="pointer-events-none absolute -right-40 -top-40 -z-10 h-[620px] w-[620px] rounded-full bg-lime opacity-[0.12] blur-[200px]" />
 
       {/* content */}
-      <div className="hero-type relative z-10 flex flex-1 flex-col justify-center px-5 will-change-transform md:px-10">
-        <div className="max-w-7xl">
-          <div className="hero-fade mb-6 flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.4em] text-lime">
-            <span className="h-px w-12 bg-lime" /> Dubai Based · Global Reach
-          </div>
+      <div className="hero-type relative z-10 flex flex-1 items-center px-5 will-change-transform md:px-10">
+        <div className="grid w-full items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
+          <div>
+            <div className="hero-fade mb-6 flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.4em] text-lime">
+              <span className="h-px w-12 bg-lime" /> Dubai Based · Global Reach
+            </div>
 
-          <h1 className="display text-[15vw] uppercase leading-[0.85] tracking-tight md:text-[12vw] lg:text-[9.5vw]">
-            <span className="block overflow-hidden">
-              <span className="hero-line block">We Build</span>
-            </span>
-            <span className="block overflow-hidden">
-              <span className="hero-line block">
-                <span
-                  className="text-transparent"
-                  style={{ WebkitTextStroke: "1.5px var(--foreground)" }}
-                >
-                  The
-                </span>{" "}
-                <span className="text-lime">Extra</span>
+            <h1 className="display text-[15vw] uppercase leading-[0.85] tracking-tight md:text-[11vw] lg:text-[7.2vw]">
+              <span className="block overflow-hidden">
+                <span className="hero-line block">We Build</span>
               </span>
-            </span>
-            <span className="block overflow-hidden">
-              <span className="hero-line block">Ordinary</span>
-            </span>
-          </h1>
+              <span className="block overflow-hidden">
+                <span className="hero-line block">
+                  <span
+                    className="text-transparent"
+                    style={{ WebkitTextStroke: "1.5px var(--foreground)" }}
+                  >
+                    The
+                  </span>{" "}
+                  <span className="text-lime">Extra</span>
+                </span>
+              </span>
+              <span className="block overflow-hidden">
+                <span className="hero-line block">Ordinary</span>
+              </span>
+            </h1>
 
-          <div className="mt-10 flex flex-col justify-between gap-8 md:flex-row md:items-end">
-            <p className="hero-fade max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">
+            <p className="hero-fade mt-8 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">
               Event management, exhibition design, production and fabrication — engineered end to
               end, in-house.
             </p>
 
-            <div className="hero-fade relative group w-fit">
+            <div className="hero-fade group relative mt-10 w-fit">
               <div className="absolute -inset-2 bg-lime opacity-20 blur transition duration-500 group-hover:opacity-40" />
               <a
                 href="#work"
@@ -114,21 +114,29 @@ export function Hero() {
             </div>
           </div>
 
-          <div className="hero-fade mt-10 hidden max-w-2xl grid-cols-4 gap-px border border-border bg-border md:grid">
-            {[images.exhibition, images.stage, images.activation, images.fabrication].map(
-              (src, i) => (
-                <div key={i} className="relative aspect-4/3 overflow-hidden bg-background">
-                  <img
-                    src={src}
-                    alt=""
-                    className="h-full w-full object-cover opacity-50 transition-all duration-700 hover:scale-110 hover:opacity-100"
-                  />
-                </div>
-              ),
-            )}
+          <div className="hero-fade hidden grid-cols-2 gap-px border border-border bg-border lg:grid">
+            {[
+              { src: images.exhibition, label: "Exhibitions" },
+              { src: images.stage, label: "AV & Stage" },
+              { src: images.activation, label: "Activations" },
+              { src: images.fabrication, label: "Fabrication" },
+            ].map((t) => (
+              <div key={t.label} className="group relative aspect-square overflow-hidden bg-background">
+                <img
+                  src={t.src}
+                  alt={t.label}
+                  className="h-full w-full object-cover opacity-55 transition-all duration-700 group-hover:scale-110 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+                <span className="absolute bottom-4 left-4 text-[10px] uppercase tracking-[0.35em] text-lime">
+                  {t.label}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
+
 
       {/* technical footer */}
       <div className="relative z-10 flex items-end justify-between px-5 pb-10 md:px-10">
