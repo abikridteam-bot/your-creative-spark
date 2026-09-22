@@ -51,7 +51,7 @@ export function Hero() {
     return () => ctx.revert();
   }, [index]);
 
-  const active = slides[index];
+  const active = slides[index]!;
 
   return (
     <section
@@ -75,14 +75,14 @@ export function Hero() {
           {/* side peeks */}
           <div className="pointer-events-none absolute inset-y-10 -left-16 hidden w-40 overflow-hidden opacity-30 [transform:skewY(4deg)] lg:block">
             <img
-              src={slides[(index - 1 + slides.length) % slides.length].image}
+              src={slides[(index - 1 + slides.length) % slides.length]!.image}
               alt=""
               className="h-full w-full object-cover"
             />
           </div>
           <div className="pointer-events-none absolute inset-y-10 -right-16 hidden w-40 overflow-hidden opacity-30 [transform:skewY(-4deg)] lg:block">
             <img
-              src={slides[(index + 1) % slides.length].image}
+              src={slides[(index + 1) % slides.length]!.image}
               alt=""
               className="h-full w-full object-cover"
             />
