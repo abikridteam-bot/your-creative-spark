@@ -261,45 +261,70 @@ export function Production() {
   const [active, setActive] = useState(0);
   const material = materials[active] ?? materials[0]!;
   return (
-    <section className="relative overflow-hidden border-t border-border px-5 py-28 md:px-10 md:py-40">
-      <img
-        src={material.image}
-        alt=""
-        loading="lazy"
-        className="absolute inset-0 h-full w-full object-cover opacity-20 transition-opacity duration-700"
-      />
-      <div className="absolute inset-0 bg-background/60" />
-      <div className="relative">
-        <h2 className="display text-section">
-          From idea
-          <br />
-          to <span className="text-lime">installation.</span>
-        </h2>
-        <p className="mt-8 max-w-xl text-lg text-muted-foreground">
-          A full production facility: joinery, metal, acrylic, CNC, fiberglass, styrofoam and
-          specialized paint — delivered by one team.
-        </p>
-        <div className="mt-14 flex flex-wrap gap-3">
+    <section className="border-t border-border px-5 py-28 md:px-10 md:py-40">
+      <div className="grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+        <div>
+          <div className="mb-8 text-[10px] uppercase tracking-[0.5em] text-lime">
+            In-House Production
+          </div>
+          <h2 className="display text-section leading-[0.85]">
+            From idea
+            <br />
+            to <span className="text-lime">installation.</span>
+          </h2>
+          <p className="mt-8 max-w-xl text-lg text-muted-foreground">
+            A full production facility: joinery, metal, acrylic, CNC, fiberglass, styrofoam and
+            specialized paint — delivered by one team.
+          </p>
+
+          <div className="mt-12 grid gap-px border border-border bg-border sm:grid-cols-2">
+            {materials.map((m, i) => (
+              <button
+                key={m.name}
+                data-cursor
+                onPointerEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
+                onClick={() => setActive(i)}
+                className={`display flex items-center justify-between px-5 py-4 text-left text-xl uppercase transition-colors md:text-2xl ${
+                  active === i
+                    ? "bg-lime text-background"
+                    : "bg-background text-foreground hover:text-lime"
+                }`}
+              >
+                {m.name}
+                <span className="font-sans text-[10px] tracking-[0.3em] opacity-60">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative aspect-4/5 overflow-hidden border border-border lg:aspect-square">
           {materials.map((m, i) => (
-            <button
+            <img
               key={m.name}
-              data-cursor
-              onPointerEnter={() => setActive(i)}
-              onClick={() => setActive(i)}
-              className={`display border px-5 py-3 text-xl uppercase transition-colors md:text-2xl ${
-                active === i
-                  ? "border-lime bg-lime text-background"
-                  : "border-border text-foreground hover:border-lime hover:text-lime"
+              src={m.image}
+              alt={m.name}
+              loading="lazy"
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+                active === i ? "opacity-100" : "opacity-0"
               }`}
-            >
-              {m.name}
-            </button>
+            />
           ))}
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+          <div className="absolute bottom-6 left-6 flex items-baseline gap-4">
+            <span className="display text-4xl text-lime md:text-6xl">{material.name}</span>
+            <span className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
+              Workshop
+            </span>
+          </div>
         </div>
       </div>
     </section>
   );
 }
+
 
 export function Process() {
   const ref = useReveal<HTMLElement>(".step");
