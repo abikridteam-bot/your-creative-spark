@@ -53,24 +53,10 @@ export function Intro() {
 }
 
 export function ServicesList() {
-  const root = useRef<HTMLDivElement>(null);
-  const preview = useRef<HTMLDivElement>(null);
-  const [hover, setHover] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (!preview.current) return;
-    const xTo = gsap.quickTo(preview.current, "x", { duration: 0.6, ease: "power3" });
-    const yTo = gsap.quickTo(preview.current, "y", { duration: 0.6, ease: "power3" });
-    const move = (e: PointerEvent) => {
-      xTo(e.clientX - 180);
-      yTo(e.clientY - 130);
-    };
-    window.addEventListener("pointermove", move, { passive: true });
-    return () => window.removeEventListener("pointermove", move);
-  }, []);
+  const ref = useReveal<HTMLElement>(".svc-card");
 
   return (
-    <section id="services" ref={root} className="relative border-t border-border px-5 py-28 md:px-10 md:py-40">
+    <section id="services" ref={ref} className="border-t border-border px-5 py-28 md:px-10 md:py-40">
       <div className="mb-16 flex flex-wrap items-end justify-between gap-6">
         <h2 className="display text-section">
           What
@@ -78,97 +64,45 @@ export function ServicesList() {
           We <span className="text-lime">Do</span>
         </h2>
         <span className="text-[10px] uppercase tracking-[0.5em] text-muted-foreground">
-          16 Capabilities
+          {services.length} Capabilities
         </span>
       </div>
 
-      <ul className="border-t border-border">
+      <div className="grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
         {services.map((s, i) => (
-          <li key={s}>
-            <a
-              href="#contact"
-              data-cursor="Open"
-              onPointerEnter={() => setHover(i)}
-              onPointerLeave={() => setHover(null)}
-              className="group flex items-baseline gap-5 border-b border-border py-5 transition-colors md:py-7"
-            >
-              <span className="font-sans text-xs tracking-widest text-lime">
+          <a
+            key={s}
+            href="#contact"
+            data-cursor="Enquire"
+            className="svc-card group relative block overflow-hidden bg-background"
+          >
+            <div className="relative h-56 overflow-hidden md:h-64">
+              <img
+                src={serviceImages[i]}
+                alt={s}
+                loading="lazy"
+                className="h-full w-full object-cover opacity-60 transition-all duration-[900ms] ease-out group-hover:scale-110 group-hover:opacity-100"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+              <span className="absolute left-4 top-4 font-sans text-[10px] tracking-[0.4em] text-lime">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <span className="display text-[clamp(1.8rem,5.5vw,4.5rem)] transition-all duration-500 group-hover:translate-x-4 group-hover:text-lime">
+            </div>
+            <div className="flex items-baseline justify-between gap-3 px-4 pb-6 pt-4">
+              <span className="display text-2xl leading-none transition-colors duration-500 group-hover:text-lime md:text-[1.75rem]">
                 {s}
               </span>
-            </a>
-          </li>
+              <span className="text-lime opacity-0 transition-all duration-500 group-hover:translate-x-1 group-hover:opacity-100">
+                →
+              </span>
+            </div>
+          </a>
         ))}
-      </ul>
-
-      <div
-        ref={preview}
-        aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-40 hidden h-[260px] w-[360px] overflow-hidden md:block"
-        style={{ opacity: hover === null ? 0 : 1, transition: "opacity .35s ease" }}
-      >
-        {hover !== null && (
-          <img
-            src={serviceImages[hover]}
-            alt=""
-            className="h-full w-full object-cover"
-            loading="lazy"
-          />
-        )}
       </div>
     </section>
   );
 }
 
-export function HorizontalServices() {
-  const root = useRef<HTMLDivElement>(null);
-  const track = useRef<HTMLDivElement>(null);
-  const [index, setIndex] = useState(1);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const el = track.current;
-      if (!el) return;
-      const distance = () => el.scrollWidth - window.innerWidth;
-      gsap.to(el, {
-        x: () => -distance(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: root.current,
-          start: "top top",
-          end: () => `+=${distance()}`,
-          scrub: 0.6,
-          pin: true,
-          invalidateOnRefresh: true,
-          onUpdate: (self) =>
-            setIndex(Math.min(services.length, Math.floor(self.progress * services.length) + 1)),
-        },
-      });
-    }, root);
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <section ref={root} className="relative h-[100svh] overflow-hidden border-t border-border">
-      <div ref={track} className="flex h-full items-center gap-16 px-5 will-change-transform md:px-10">
-        {services.map((s, i) => (
-          <div key={s} className="flex shrink-0 items-center gap-16">
-            <span className="display whitespace-nowrap text-[clamp(3rem,11vw,10rem)] text-foreground/90">
-              {s}
-            </span>
-            <span className="text-4xl text-lime">→</span>
-            {i === services.length - 1 && null}
-          </div>
-        ))}
-      </div>
-      <div className="absolute bottom-8 left-5 text-xs uppercase tracking-[0.4em] text-lime md:left-10">
-        {String(index).padStart(2, "0")} / {services.length}
-      </div>
-    </section>
-  );
-}
 
 export function Work() {
   const ref = useReveal<HTMLElement>(".work-item");
@@ -327,45 +261,70 @@ export function Production() {
   const [active, setActive] = useState(0);
   const material = materials[active] ?? materials[0]!;
   return (
-    <section className="relative overflow-hidden border-t border-border px-5 py-28 md:px-10 md:py-40">
-      <img
-        src={material.image}
-        alt=""
-        loading="lazy"
-        className="absolute inset-0 h-full w-full object-cover opacity-20 transition-opacity duration-700"
-      />
-      <div className="absolute inset-0 bg-background/60" />
-      <div className="relative">
-        <h2 className="display text-section">
-          From idea
-          <br />
-          to <span className="text-lime">installation.</span>
-        </h2>
-        <p className="mt-8 max-w-xl text-lg text-muted-foreground">
-          A full production facility: joinery, metal, acrylic, CNC, fiberglass, styrofoam and
-          specialized paint — delivered by one team.
-        </p>
-        <div className="mt-14 flex flex-wrap gap-3">
+    <section className="border-t border-border px-5 py-28 md:px-10 md:py-40">
+      <div className="grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+        <div>
+          <div className="mb-8 text-[10px] uppercase tracking-[0.5em] text-lime">
+            In-House Production
+          </div>
+          <h2 className="display text-section leading-[0.85]">
+            From idea
+            <br />
+            to <span className="text-lime">installation.</span>
+          </h2>
+          <p className="mt-8 max-w-xl text-lg text-muted-foreground">
+            A full production facility: joinery, metal, acrylic, CNC, fiberglass, styrofoam and
+            specialized paint — delivered by one team.
+          </p>
+
+          <div className="mt-12 grid gap-px border border-border bg-border sm:grid-cols-2">
+            {materials.map((m, i) => (
+              <button
+                key={m.name}
+                data-cursor
+                onPointerEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
+                onClick={() => setActive(i)}
+                className={`display flex items-center justify-between px-5 py-4 text-left text-xl uppercase transition-colors md:text-2xl ${
+                  active === i
+                    ? "bg-lime text-background"
+                    : "bg-background text-foreground hover:text-lime"
+                }`}
+              >
+                {m.name}
+                <span className="font-sans text-[10px] tracking-[0.3em] opacity-60">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative aspect-4/5 overflow-hidden border border-border lg:aspect-square">
           {materials.map((m, i) => (
-            <button
+            <img
               key={m.name}
-              data-cursor
-              onPointerEnter={() => setActive(i)}
-              onClick={() => setActive(i)}
-              className={`display border px-5 py-3 text-xl uppercase transition-colors md:text-2xl ${
-                active === i
-                  ? "border-lime bg-lime text-background"
-                  : "border-border text-foreground hover:border-lime hover:text-lime"
+              src={m.image}
+              alt={m.name}
+              loading="lazy"
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+                active === i ? "opacity-100" : "opacity-0"
               }`}
-            >
-              {m.name}
-            </button>
+            />
           ))}
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+          <div className="absolute bottom-6 left-6 flex items-baseline gap-4">
+            <span className="display text-4xl text-lime md:text-6xl">{material.name}</span>
+            <span className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
+              Workshop
+            </span>
+          </div>
         </div>
       </div>
     </section>
   );
 }
+
 
 export function Process() {
   const ref = useReveal<HTMLElement>(".step");

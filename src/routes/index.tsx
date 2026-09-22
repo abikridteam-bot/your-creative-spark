@@ -13,7 +13,6 @@ import {
   Certifications,
   Contact,
   Footer,
-  HorizontalServices,
   Intro,
   Process,
   Production,
@@ -75,7 +74,6 @@ function Index() {
         <Hero />
         <Intro />
         <ServicesList />
-        <HorizontalServices />
         <Work />
         <Stats />
         <About />
