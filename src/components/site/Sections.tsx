@@ -36,7 +36,7 @@ function useReveal<T extends HTMLElement>(selector = ".reveal") {
 export function Intro() {
   const ref = useReveal<HTMLElement>();
   return (
-    <section ref={ref} className="border-t border-border px-5 py-28 md:px-10 md:py-40">
+    <section ref={ref} className="border-t border-border px-6 py-36 md:px-16 md:py-52">
       <div className="mb-14 text-[10px] uppercase tracking-[0.5em] text-lime">01 / Who We Are</div>
       <h2 className="display text-section max-w-[18ch]">
         <span className="reveal block">Transforming ideas</span>
@@ -68,7 +68,7 @@ export function ServicesList() {
   }, [open]);
 
   return (
-    <section id="services" ref={ref} className="border-t border-border px-5 py-28 md:px-10 md:py-40">
+    <section id="services" ref={ref} className="border-t border-border px-6 py-36 md:px-16 md:py-52">
       <div className="mb-16 flex flex-wrap items-end justify-between gap-6">
         <h2 className="display text-section">
           What
@@ -154,7 +154,7 @@ export function ServicesList() {
 export function Work() {
   const ref = useReveal<HTMLElement>(".work-item");
   return (
-    <section id="work" ref={ref} className="border-t border-border px-5 py-28 md:px-10 md:py-40">
+    <section id="work" ref={ref} className="border-t border-border px-6 py-36 md:px-16 md:py-52">
       <h2 className="display text-section mb-16">
         Selected
         <br />
@@ -221,7 +221,7 @@ export function Stats() {
   ];
 
   return (
-    <section ref={ref} className="relative overflow-hidden border-t border-border px-5 py-24 md:px-10 md:py-32">
+    <section ref={ref} className="relative overflow-hidden border-t border-border px-6 py-32 md:px-16 md:py-44">
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
         <span className="display text-[40vw] leading-none text-foreground/[0.03]">110</span>
       </div>
@@ -243,7 +243,7 @@ export function About() {
   const ref = useReveal<HTMLElement>(".reveal-about");
   const pillars = ["Expertise", "Custom Solutions", "Technology", "Quality"];
   return (
-    <section id="about" ref={ref} className="border-t border-border px-5 py-28 md:px-10 md:py-40">
+    <section id="about" ref={ref} className="border-t border-border px-6 py-36 md:px-16 md:py-52">
       <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
         <h2 className="display text-section leading-[0.85]">
           About
@@ -307,7 +307,7 @@ export function Production() {
   const [active, setActive] = useState(0);
   const material = materials[active] ?? materials[0]!;
   return (
-    <section className="border-t border-border px-5 py-28 md:px-10 md:py-40">
+    <section className="border-t border-border px-6 py-36 md:px-16 md:py-52">
       <div className="grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:items-center">
         <div>
           <div className="mb-8 text-[10px] uppercase tracking-[0.5em] text-lime">
@@ -375,7 +375,7 @@ export function Production() {
 export function Process() {
   const ref = useReveal<HTMLElement>(".step");
   return (
-    <section ref={ref} className="border-t border-border px-5 py-28 md:px-10 md:py-40">
+    <section ref={ref} className="border-t border-border px-6 py-36 md:px-16 md:py-52">
       <h2 className="display text-section mb-16">
         Why <span className="text-lime">110?</span>
       </h2>
@@ -420,7 +420,7 @@ export function CTA() {
   }, []);
 
   return (
-    <section className="border-t border-border px-5 py-32 text-center md:px-10 md:py-48">
+    <section className="border-t border-border px-6 py-40 text-center md:px-16 md:py-60">
       <h2 className="display text-section">
         Let's build
         <br />
@@ -455,7 +455,7 @@ export function Contact() {
   ];
 
   return (
-    <section id="contact" className="border-t border-border px-5 py-28 md:px-10 md:py-40">
+    <section id="contact" className="border-t border-border px-6 py-36 md:px-16 md:py-52">
       <div className="grid gap-14 lg:grid-cols-2">
         <div>
           <h2 className="display text-section">

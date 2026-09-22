@@ -35,8 +35,8 @@
   --color-lime: var(--lime);
   --color-charcoal: var(--charcoal);
   --color-grey: var(--grey);
-  --font-display: "Anton", "Arial Narrow", sans-serif;
-  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
@@ -95,9 +95,10 @@
 
 @utility display {
   font-family: var(--font-display);
+  font-weight: 800;
   text-transform: uppercase;
-  line-height: 0.82;
-  letter-spacing: -0.01em;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
 }
 
 @utility grain {
@@ -105,11 +106,11 @@
 }
 
 @utility text-hero {
-  font-size: clamp(4.5rem, 13vw, 14rem);
+  font-size: clamp(3.5rem, 10vw, 11rem);
 }
 
 @utility text-section {
-  font-size: clamp(3rem, 10vw, 11rem);
+  font-size: clamp(2.5rem, 7.5vw, 8rem);
 }
 
 @utility glow-lime {
