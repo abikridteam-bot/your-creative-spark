@@ -54,6 +54,18 @@ export function Intro() {
 
 export function ServicesList() {
   const ref = useReveal<HTMLElement>(".svc-card");
+  const [open, setOpen] = useState<number | null>(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(null);
+      if (open === null) return;
+      if (e.key === "ArrowRight") setOpen((i) => ((i ?? 0) + 1) % services.length);
+      if (e.key === "ArrowLeft") setOpen((i) => ((i ?? 0) - 1 + services.length) % services.length);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
   return (
     <section id="services" ref={ref} className="border-t border-border px-5 py-28 md:px-10 md:py-40">
@@ -70,13 +82,14 @@ export function ServicesList() {
 
       <div className="grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
         {services.map((s, i) => (
-          <a
+          <button
             key={s}
-            href="#contact"
-            data-cursor="Enquire"
-            className="svc-card group relative block overflow-hidden bg-background"
+            type="button"
+            onClick={() => setOpen(i)}
+            data-cursor="Enlarge"
+            className="svc-card group relative block w-full bg-background text-left"
           >
-            <div className="relative h-56 overflow-hidden md:h-64">
+            <div className="relative aspect-4/3 overflow-hidden">
               <img
                 src={serviceImages[i]}
                 alt={s}
@@ -93,16 +106,50 @@ export function ServicesList() {
                 {s}
               </span>
               <span className="text-lime opacity-0 transition-all duration-500 group-hover:translate-x-1 group-hover:opacity-100">
-                →
+                ↗
               </span>
             </div>
-          </a>
+          </button>
         ))}
       </div>
+
+      {open !== null && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={services[open]}
+          onClick={() => setOpen(null)}
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-background/95 p-5 backdrop-blur-sm md:p-10"
+        >
+          <button
+            type="button"
+            onClick={() => setOpen(null)}
+            aria-label="Close"
+            className="absolute right-5 top-5 text-xs uppercase tracking-[0.3em] text-lime md:right-10 md:top-10"
+          >
+            Close ✕
+          </button>
+          <figure
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-full w-full max-w-5xl border border-border"
+          >
+            <img
+              src={serviceImages[open]}
+              alt={services[open]}
+              className="max-h-[72svh] w-full object-cover"
+            />
+            <figcaption className="flex items-baseline justify-between gap-4 bg-background px-5 py-4">
+              <span className="display text-2xl md:text-4xl">{services[open]}</span>
+              <span className="font-sans text-[10px] tracking-[0.4em] text-lime">
+                {String(open + 1).padStart(2, "0")} / {services.length}
+              </span>
+            </figcaption>
+          </figure>
+        </div>
+      )}
     </section>
   );
 }
-
 
 export function Work() {
   const ref = useReveal<HTMLElement>(".work-item");
@@ -118,18 +165,16 @@ export function Work() {
           <article
             key={p.title}
             data-cursor="View Project"
-            className={`work-item group relative overflow-hidden border border-border ${
-              p.tall ? "md:row-span-2" : ""
-            }`}
+            className="work-item group relative overflow-hidden border border-border"
           >
-            <img
-              src={p.image}
-              alt={p.title}
-              loading="lazy"
-              className={`w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105 ${
-                p.tall ? "h-[520px] md:h-[820px]" : "h-[360px] md:h-[400px]"
-              }`}
-            />
+            <div className="aspect-4/3 overflow-hidden">
+              <img
+                src={p.image}
+                alt={p.title}
+                loading="lazy"
+                className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
+              />
+            </div>
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-95" />
             <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
               <span className="text-[10px] uppercase tracking-[0.4em] text-lime">{p.category}</span>
@@ -150,6 +195,7 @@ export function Work() {
     </section>
   );
 }
+
 
 export function Stats() {
   const ref = useRef<HTMLElement>(null);

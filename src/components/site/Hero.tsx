@@ -113,6 +113,20 @@ export function Hero() {
               </a>
             </div>
           </div>
+
+          <div className="hero-fade mt-10 hidden max-w-2xl grid-cols-4 gap-px border border-border bg-border md:grid">
+            {[images.exhibition, images.stage, images.activation, images.fabrication].map(
+              (src, i) => (
+                <div key={i} className="relative aspect-4/3 overflow-hidden bg-background">
+                  <img
+                    src={src}
+                    alt=""
+                    className="h-full w-full object-cover opacity-50 transition-all duration-700 hover:scale-110 hover:opacity-100"
+                  />
+                </div>
+              ),
+            )}
+          </div>
         </div>
       </div>
 
