@@ -325,10 +325,11 @@ export function Certifications() {
 
 export function Production() {
   const [active, setActive] = useState(0);
+  const material = materials[active] ?? materials[0]!;
   return (
     <section className="relative overflow-hidden border-t border-border px-5 py-28 md:px-10 md:py-40">
       <img
-        src={materials[active].image}
+        src={material.image}
         alt=""
         loading="lazy"
         className="absolute inset-0 h-full w-full object-cover opacity-20 transition-opacity duration-700"
