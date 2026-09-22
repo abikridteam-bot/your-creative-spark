@@ -1,162 +1,170 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { images } from "./data";
+import { projects } from "./data";
 
-gsap.registerPlugin(ScrollTrigger);
+const slides = projects.map((p) => ({
+  title: p.title,
+  tag: p.category,
+  copy: p.copy,
+  image: p.image,
+}));
 
 export function Hero() {
   const root = useRef<HTMLElement>(null);
+  const [index, setIndex] = useState(0);
+  const go = useCallback((dir: number) => {
+    setIndex((i) => (i + dir + slides.length) % slides.length);
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(() => go(1), 6500);
+    return () => clearInterval(id);
+  }, [go]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".hero-line", {
-        yPercent: 110,
-        opacity: 0,
-        duration: 1.1,
-        ease: "power4.out",
-        stagger: 0.12,
-        delay: 1.9,
-      });
-
       gsap.from(".hero-fade", {
-        y: 24,
+        y: 26,
         opacity: 0,
         duration: 0.9,
         ease: "power3.out",
         stagger: 0.1,
-        delay: 2.4,
-      });
-
-      gsap.to(".hero-type", {
-        yPercent: -10,
-        opacity: 0.2,
-        ease: "none",
-        scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
-      });
-
-      gsap.to(".hero-bg", {
-        yPercent: 15,
-        scale: 1.1,
-        ease: "none",
-        scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
+        delay: 2.1,
       });
     }, root);
     return () => ctx.revert();
   }, []);
 
-  return (
-    <section ref={root} id="top" className="relative flex h-[100svh] w-full flex-col overflow-hidden">
-      {/* image + glow backdrop */}
-      <div className="hero-bg absolute inset-0 -z-20 will-change-transform">
-        <img
-          src={images.stage}
-          alt="110 Events stage production"
-          width={1600}
-          height={1008}
-          className="h-full w-full object-cover opacity-25"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/90 to-background" />
-      </div>
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".slide-active",
+        { opacity: 0, scale: 1.06 },
+        { opacity: 1, scale: 1, duration: 1.1, ease: "power3.out" },
+      );
+      gsap.fromTo(
+        ".slide-copy > *",
+        { y: 28, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7, stagger: 0.08, ease: "power3.out" },
+      );
+    }, root);
+    return () => ctx.revert();
+  }, [index]);
 
-      {/* blueprint grid */}
+  const active = slides[index];
+
+  return (
+    <section
+      ref={root}
+      id="top"
+      className="relative flex h-[100svh] w-full flex-col overflow-hidden"
+    >
+      {/* ambient contour background */}
       <div
-        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.18]"
+        className="pointer-events-none absolute inset-0 -z-20 opacity-[0.15]"
         style={{
           backgroundImage:
-            "linear-gradient(hsl(0 0% 100% / 0.12) 1px, transparent 1px), linear-gradient(90deg, hsl(0 0% 100% / 0.12) 1px, transparent 1px)",
-          backgroundSize: "56px 56px",
+            "repeating-radial-gradient(circle at 12% 40%, hsl(0 0% 100% / 0.2) 0 1px, transparent 1px 46px)",
         }}
       />
       <div className="pointer-events-none absolute -right-40 -top-40 -z-10 h-[620px] w-[620px] rounded-full bg-lime opacity-[0.12] blur-[200px]" />
 
-      {/* content */}
-      <div className="hero-type relative z-10 flex flex-1 items-center px-5 will-change-transform md:px-10">
-        <div className="grid w-full items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
-          <div>
-            <div className="hero-fade mb-6 flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.4em] text-lime">
-              <span className="h-px w-12 bg-lime" /> Dubai Based · Global Reach
-            </div>
+      {/* slider stage */}
+      <div className="relative flex flex-1 items-center justify-center px-4 pt-24 md:px-10">
+        <div className="relative w-full max-w-[1400px]">
+          {/* side peeks */}
+          <div className="pointer-events-none absolute inset-y-10 -left-16 hidden w-40 overflow-hidden opacity-30 [transform:skewY(4deg)] lg:block">
+            <img
+              src={slides[(index - 1 + slides.length) % slides.length].image}
+              alt=""
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div className="pointer-events-none absolute inset-y-10 -right-16 hidden w-40 overflow-hidden opacity-30 [transform:skewY(-4deg)] lg:block">
+            <img
+              src={slides[(index + 1) % slides.length].image}
+              alt=""
+              className="h-full w-full object-cover"
+            />
+          </div>
 
-            <h1 className="display text-[15vw] uppercase leading-[0.85] tracking-tight md:text-[11vw] lg:text-[7.2vw]">
-              <span className="block overflow-hidden">
-                <span className="hero-line block">We Build</span>
-              </span>
-              <span className="block overflow-hidden">
-                <span className="hero-line block">
-                  <span
-                    className="text-transparent"
-                    style={{ WebkitTextStroke: "1.5px var(--foreground)" }}
-                  >
-                    The
-                  </span>{" "}
-                  <span className="text-lime">Extra</span>
+          {/* main card */}
+          <div className="relative aspect-16/9 max-h-[68svh] w-full overflow-hidden border border-border">
+            <img
+              key={active.image}
+              src={active.image}
+              alt={active.title}
+              className="slide-active h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+
+            <div className="slide-copy absolute bottom-6 left-6 max-w-xl md:bottom-10 md:left-10">
+              <div className="mb-4 flex items-center gap-3">
+                <span className="border border-lime px-3 py-1 text-[10px] font-bold uppercase tracking-[0.3em] text-lime">
+                  Featured
                 </span>
-              </span>
-              <span className="block overflow-hidden">
-                <span className="hero-line block">Ordinary</span>
-              </span>
-            </h1>
-
-            <p className="hero-fade mt-8 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">
-              Event management, exhibition design, production and fabrication — engineered end to
-              end, in-house.
-            </p>
-
-            <div className="hero-fade group relative mt-10 w-fit">
-              <div className="absolute -inset-2 bg-lime opacity-20 blur transition duration-500 group-hover:opacity-40" />
+                <span className="border border-border px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+                  {active.tag}
+                </span>
+              </div>
+              <h1 className="display text-[13vw] uppercase leading-[0.85] md:text-[6vw]">
+                {active.title}
+              </h1>
+              <p className="mt-3 max-w-md text-xs uppercase tracking-[0.2em] text-muted-foreground md:text-sm">
+                {active.copy}
+              </p>
               <a
                 href="#work"
-                className="relative inline-block border border-lime px-10 py-4 text-sm font-bold uppercase tracking-[0.2em] text-lime transition-all duration-300 hover:bg-lime hover:text-background"
+                className="mt-7 inline-block rounded-full border border-lime px-10 py-3 text-xs font-bold uppercase tracking-[0.25em] text-lime transition-all duration-300 hover:bg-lime hover:text-background"
               >
                 View Portfolio
               </a>
             </div>
+
+            {/* arrows */}
+            <div className="absolute right-5 top-1/2 flex -translate-y-1/2 flex-col gap-3">
+              <button
+                aria-label="Previous slide"
+                onClick={() => go(-1)}
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-lime/60 text-lime transition hover:bg-lime hover:text-background"
+              >
+                ▲
+              </button>
+              <button
+                aria-label="Next slide"
+                onClick={() => go(1)}
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-lime/60 text-lime transition hover:bg-lime hover:text-background"
+              >
+                ▼
+              </button>
+            </div>
           </div>
 
-          <div className="hero-fade hidden grid-cols-2 gap-px border border-border bg-border lg:grid">
-            {[
-              { src: images.exhibition, label: "Exhibitions" },
-              { src: images.stage, label: "AV & Stage" },
-              { src: images.activation, label: "Activations" },
-              { src: images.fabrication, label: "Fabrication" },
-            ].map((t) => (
-              <div key={t.label} className="group relative aspect-square overflow-hidden bg-background">
-                <img
-                  src={t.src}
-                  alt={t.label}
-                  className="h-full w-full object-cover opacity-55 transition-all duration-700 group-hover:scale-110 group-hover:opacity-100"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-                <span className="absolute bottom-4 left-4 text-[10px] uppercase tracking-[0.35em] text-lime">
-                  {t.label}
-                </span>
-              </div>
-            ))}
+          {/* thumbnails */}
+          <div className="hero-fade mt-6 flex items-center justify-between gap-6">
+            <div className="flex gap-8 font-mono text-[10px] uppercase text-muted-foreground">
+              <span>Coord / 25.2048 N, 55.2708 E</span>
+              <span className="hidden md:inline">Base / Dubai UAE</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="hidden text-[10px] uppercase tracking-[0.3em] text-muted-foreground md:inline">
+                See all work ▸
+              </span>
+              {slides.map((s, i) => (
+                <button
+                  key={s.title}
+                  onClick={() => setIndex(i)}
+                  aria-label={s.title}
+                  className={`h-12 w-16 overflow-hidden border transition ${
+                    i === index ? "border-lime opacity-100" : "border-border opacity-50 hover:opacity-90"
+                  }`}
+                >
+                  <img src={s.image} alt="" className="h-full w-full object-cover" />
+                </button>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-
-
-      {/* technical footer */}
-      <div className="relative z-10 flex items-end justify-between px-5 pb-10 md:px-10">
-        <div className="flex gap-8 font-mono text-[10px] uppercase text-muted-foreground">
-          <span>Coord / 25.2048 N, 55.2708 E</span>
-          <span className="hidden sm:block">Type / Fabrication House</span>
-          <span className="hidden sm:block">Base / Dubai UAE</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <span className="mb-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-            Scroll to explore
-          </span>
-          <span className="h-16 w-px bg-gradient-to-b from-lime to-transparent" />
-        </div>
-      </div>
-
-      {/* structural corner frame */}
-      <div className="pointer-events-none absolute bottom-0 right-0 h-2/3 w-1/3 border-l border-t border-foreground/5">
-        <span className="absolute -ml-2 -mt-2 left-0 top-0 h-4 w-4 border border-lime" />
-        <span className="absolute -mb-2 -mr-2 bottom-0 right-0 h-4 w-4 border border-lime" />
       </div>
     </section>
   );
