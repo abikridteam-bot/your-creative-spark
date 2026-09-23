@@ -98,7 +98,7 @@ export function Hero() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
 
-            <div className="slide-copy absolute bottom-6 left-6 max-w-xl md:bottom-10 md:left-10">
+            <div className="slide-copy absolute bottom-6 left-5 right-5 max-w-xl pr-14 sm:right-auto sm:pr-0 md:bottom-10 md:left-10">
               <div className="mb-4 flex items-center gap-3">
                 <span className="border border-lime px-3 py-1 text-[10px] font-bold uppercase tracking-[0.3em] text-lime">
                   Featured
