@@ -178,7 +178,7 @@ export function Work() {
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-95" />
             <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
               <span className="text-[10px] uppercase tracking-[0.4em] text-lime">{p.category}</span>
-              <h3 className="display mt-3 text-4xl transition-transform duration-500 group-hover:-translate-y-1 md:text-6xl">
+              <h3 className="display mt-3 text-[clamp(1.75rem,4vw,3rem)] break-words hyphens-auto transition-transform duration-500 group-hover:-translate-y-1">
                 {p.title}
               </h3>
               <p className="mt-3 max-w-md text-sm text-muted-foreground opacity-0 transition-opacity duration-500 group-hover:opacity-100">
@@ -313,7 +313,7 @@ export function Production() {
           <div className="mb-5 text-[10px] uppercase tracking-[0.4em] text-lime md:mb-8 md:tracking-[0.5em]">
             In-House Production
           </div>
-          <h2 className="display text-section leading-[0.9]">
+          <h2 className="display text-[clamp(2.25rem,5.5vw,5rem)] leading-[0.9] break-words">
             From idea
             <br />
             to <span className="text-lime">installation.</span>
@@ -347,7 +347,7 @@ export function Production() {
         </div>
 
         {/* mobile: swipeable material chips */}
-        <div className="order-2 -mx-5 mt-6 flex snap-x gap-2 overflow-x-auto px-5 pb-1 sm:hidden">
+        <div className="no-scrollbar order-2 -mx-5 mt-6 flex snap-x gap-2 overflow-x-auto px-5 sm:hidden">
           {materials.map((m, i) => (
             <button
               key={m.name}

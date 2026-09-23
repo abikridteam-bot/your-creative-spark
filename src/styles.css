@@ -155,3 +155,12 @@
 .reveal-clip {
   clip-path: inset(0 0 100% 0);
 }
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
