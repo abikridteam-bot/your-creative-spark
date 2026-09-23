@@ -202,9 +202,9 @@ export function Stats() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(".stat", {
-        yPercent: 60,
+        yPercent: 40,
         opacity: 0,
-        stagger: 0.1,
+        stagger: 0.12,
         duration: 1,
         ease: "power3.out",
         scrollTrigger: { trigger: ref.current, start: "top 80%" },
@@ -214,30 +214,60 @@ export function Stats() {
   }, []);
 
   const stats = [
-    { v: "110", l: "The Standard" },
-    { v: "360°", l: "In-House" },
-    { v: "01", l: "Partner" },
-    { v: "24/7", l: "Production" },
+    { v: "110", l: "The Standard", c: "Beyond one hundred percent on every build." },
+    { v: "360°", l: "In-House", c: "Design, production and install under one roof." },
+    { v: "01", l: "Partner", c: "A single team accountable end to end." },
+    { v: "24/7", l: "Production", c: "Workshop and crews running around the clock." },
   ];
 
   return (
-    <section ref={ref} className="relative overflow-hidden border-t border-border px-6 py-32 md:px-16 md:py-44">
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <span className="display text-[40vw] leading-none text-foreground/[0.03]">110</span>
+    <section
+      ref={ref}
+      className="relative overflow-hidden border-t border-border px-6 py-28 md:px-16 md:py-40"
+    >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,color-mix(in_oklab,var(--lime)_10%,transparent),transparent_60%)]" />
+
+      <div className="relative mb-14 flex flex-wrap items-end justify-between gap-6 md:mb-20">
+        <div>
+          <div className="mb-5 text-[10px] uppercase tracking-[0.5em] text-lime">
+            By The Numbers
+          </div>
+          <h2 className="display text-[clamp(2rem,4.5vw,3.75rem)] leading-[0.95] max-w-[14ch]">
+            Built on a <span className="text-lime">higher</span> standard.
+          </h2>
+        </div>
+        <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
+          110 is not a name, it is a benchmark — the margin we add to every brief, every deadline
+          and every finish.
+        </p>
       </div>
-      <div className="relative grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((s) => (
-          <div key={s.l} className="stat border-t border-lime/40 pt-5">
-            <div className="display text-[clamp(3rem,7vw,6rem)] text-lime">{s.v}</div>
-            <div className="mt-2 text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
+
+      <div className="relative grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((s, i) => (
+          <div
+            key={s.l}
+            className="stat group relative overflow-hidden bg-background p-7 transition-colors duration-500 hover:bg-lime md:p-9"
+          >
+            <span className="font-sans text-[10px] tracking-[0.4em] text-muted-foreground transition-colors duration-500 group-hover:text-background/70">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <div className="display mt-10 text-[clamp(3.25rem,6vw,5rem)] leading-none text-lime transition-colors duration-500 group-hover:text-background md:mt-16">
+              {s.v}
+            </div>
+            <div className="mt-4 text-[10px] uppercase tracking-[0.4em] text-foreground transition-colors duration-500 group-hover:text-background">
               {s.l}
             </div>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground transition-colors duration-500 group-hover:text-background/80">
+              {s.c}
+            </p>
+            <span className="absolute inset-x-0 bottom-0 h-px w-0 bg-lime transition-all duration-500 group-hover:w-full" />
           </div>
         ))}
       </div>
     </section>
   );
 }
+
 
 export function About() {
   const ref = useReveal<HTMLElement>(".reveal-about");
