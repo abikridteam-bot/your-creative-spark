@@ -70,7 +70,7 @@ export function Hero() {
       <div className="pointer-events-none absolute -right-40 -top-40 -z-10 h-[620px] w-[620px] rounded-full bg-lime opacity-[0.12] blur-[200px]" />
 
       {/* slider stage */}
-      <div className="relative flex flex-1 items-center justify-center px-4 pt-24 md:px-10">
+      <div className="relative flex flex-1 items-center justify-center px-4 pt-16 pb-6 md:px-10 md:pt-24">
         <div className="relative w-full max-w-[1400px]">
           {/* side peeks */}
           <div className="pointer-events-none absolute inset-y-10 -left-16 hidden w-40 overflow-hidden opacity-30 [transform:skewY(4deg)] lg:block">
@@ -89,7 +89,7 @@ export function Hero() {
           </div>
 
           {/* main card */}
-          <div className="relative aspect-16/9 max-h-[68svh] w-full overflow-hidden border border-border">
+          <div className="relative aspect-4/5 max-h-[72svh] w-full overflow-hidden border border-border sm:aspect-16/9 sm:max-h-[68svh]">
             <img
               key={active.image}
               src={active.image}

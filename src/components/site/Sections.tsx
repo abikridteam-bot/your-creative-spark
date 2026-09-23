@@ -307,9 +307,9 @@ export function Production() {
   const [active, setActive] = useState(0);
   const material = materials[active] ?? materials[0]!;
   return (
-    <section className="border-t border-border px-6 py-36 md:px-16 md:py-52">
-      <div className="grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:items-center">
-        <div>
+    <section className="border-t border-border px-5 py-24 md:px-16 md:py-52">
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-14">
+        <div className="min-w-0">
           <div className="mb-8 text-[10px] uppercase tracking-[0.5em] text-lime">
             In-House Production
           </div>
