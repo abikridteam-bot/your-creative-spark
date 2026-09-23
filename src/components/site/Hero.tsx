@@ -57,7 +57,7 @@ export function Hero() {
     <section
       ref={root}
       id="top"
-      className="relative flex h-[100svh] w-full flex-col overflow-hidden"
+      className="relative flex min-h-[86svh] w-full flex-col overflow-hidden sm:h-[100svh]"
     >
       {/* ambient contour background */}
       <div
@@ -70,7 +70,7 @@ export function Hero() {
       <div className="pointer-events-none absolute -right-40 -top-40 -z-10 h-[620px] w-[620px] rounded-full bg-lime opacity-[0.12] blur-[200px]" />
 
       {/* slider stage */}
-      <div className="relative flex flex-1 items-center justify-center px-4 pt-16 pb-6 md:px-10 md:pt-24">
+      <div className="relative flex flex-1 items-start justify-center px-4 pt-20 pb-8 sm:items-center md:px-10 md:pt-24">
         <div className="relative w-full max-w-[1400px]">
           {/* side peeks */}
           <div className="pointer-events-none absolute inset-y-10 -left-16 hidden w-40 overflow-hidden opacity-30 [transform:skewY(4deg)] lg:block">
