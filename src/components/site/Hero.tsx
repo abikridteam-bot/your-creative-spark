@@ -141,8 +141,8 @@ export function Hero() {
           </div>
 
           {/* thumbnails */}
-          <div className="hero-fade mt-6 flex items-center justify-between gap-6">
-            <div className="flex gap-8 font-mono text-[10px] uppercase text-muted-foreground">
+          <div className="hero-fade mt-4 flex items-center justify-center gap-6 sm:mt-6 sm:justify-between">
+            <div className="hidden gap-8 font-mono text-[10px] uppercase text-muted-foreground sm:flex">
               <span>Coord / 25.2048 N, 55.2708 E</span>
               <span className="hidden md:inline">Base / Dubai UAE</span>
             </div>
