@@ -50,7 +50,7 @@ export function Cursor() {
     <div
       ref={dot}
       aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-[70] hidden md:flex items-center justify-center rounded-full bg-lime text-[10px] font-bold uppercase tracking-widest text-background transition-[width,height] duration-300 ease-out"
+      className="pointer-events-none fixed left-0 top-0 z-[200] hidden md:flex items-center justify-center rounded-full bg-lime text-[10px] font-bold uppercase tracking-widest text-background transition-[width,height] duration-300 ease-out"
       style={{
         width: label ? 104 : active ? 44 : 12,
         height: label ? 104 : active ? 44 : 12,
