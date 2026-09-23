@@ -57,7 +57,7 @@ export function Hero() {
     <section
       ref={root}
       id="top"
-      className="relative flex h-[100svh] w-full flex-col overflow-hidden"
+      className="relative flex min-h-[86svh] w-full flex-col overflow-hidden sm:h-[100svh]"
     >
       {/* ambient contour background */}
       <div
@@ -70,7 +70,7 @@ export function Hero() {
       <div className="pointer-events-none absolute -right-40 -top-40 -z-10 h-[620px] w-[620px] rounded-full bg-lime opacity-[0.12] blur-[200px]" />
 
       {/* slider stage */}
-      <div className="relative flex flex-1 items-center justify-center px-4 pt-24 md:px-10">
+      <div className="relative flex flex-1 items-start justify-center px-4 pt-20 pb-8 sm:items-center md:px-10 md:pt-24">
         <div className="relative w-full max-w-[1400px]">
           {/* side peeks */}
           <div className="pointer-events-none absolute inset-y-10 -left-16 hidden w-40 overflow-hidden opacity-30 [transform:skewY(4deg)] lg:block">
@@ -89,7 +89,7 @@ export function Hero() {
           </div>
 
           {/* main card */}
-          <div className="relative aspect-16/9 max-h-[68svh] w-full overflow-hidden border border-border">
+          <div className="relative aspect-4/5 max-h-[72svh] w-full overflow-hidden border border-border sm:aspect-16/9 sm:max-h-[68svh]">
             <img
               key={active.image}
               src={active.image}
@@ -98,7 +98,7 @@ export function Hero() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
 
-            <div className="slide-copy absolute bottom-6 left-6 max-w-xl md:bottom-10 md:left-10">
+            <div className="slide-copy absolute bottom-6 left-5 right-5 max-w-xl pr-14 sm:right-auto sm:pr-0 md:bottom-10 md:left-10">
               <div className="mb-4 flex items-center gap-3">
                 <span className="border border-lime px-3 py-1 text-[10px] font-bold uppercase tracking-[0.3em] text-lime">
                   Featured
@@ -141,8 +141,8 @@ export function Hero() {
           </div>
 
           {/* thumbnails */}
-          <div className="hero-fade mt-6 flex items-center justify-between gap-6">
-            <div className="flex gap-8 font-mono text-[10px] uppercase text-muted-foreground">
+          <div className="hero-fade mt-4 flex items-center justify-center gap-6 sm:mt-6 sm:justify-between">
+            <div className="hidden gap-8 font-mono text-[10px] uppercase text-muted-foreground sm:flex">
               <span>Coord / 25.2048 N, 55.2708 E</span>
               <span className="hidden md:inline">Base / Dubai UAE</span>
             </div>

@@ -307,23 +307,23 @@ export function Production() {
   const [active, setActive] = useState(0);
   const material = materials[active] ?? materials[0]!;
   return (
-    <section className="border-t border-border px-6 py-36 md:px-16 md:py-52">
-      <div className="grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:items-center">
-        <div>
-          <div className="mb-8 text-[10px] uppercase tracking-[0.5em] text-lime">
+    <section className="border-t border-border px-5 py-24 md:px-16 md:py-52">
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-14">
+        <div className="order-1 min-w-0">
+          <div className="mb-5 text-[10px] uppercase tracking-[0.4em] text-lime md:mb-8 md:tracking-[0.5em]">
             In-House Production
           </div>
-          <h2 className="display text-section leading-[0.85]">
+          <h2 className="display text-section leading-[0.9]">
             From idea
             <br />
             to <span className="text-lime">installation.</span>
           </h2>
-          <p className="mt-8 max-w-xl text-lg text-muted-foreground">
+          <p className="mt-5 max-w-xl text-base text-muted-foreground md:mt-8 md:text-lg">
             A full production facility: joinery, metal, acrylic, CNC, fiberglass, styrofoam and
             specialized paint — delivered by one team.
           </p>
 
-          <div className="mt-12 grid gap-px border border-border bg-border sm:grid-cols-2">
+          <div className="mt-8 hidden gap-px border border-border bg-border sm:grid sm:grid-cols-2 md:mt-12">
             {materials.map((m, i) => (
               <button
                 key={m.name}
@@ -331,14 +331,14 @@ export function Production() {
                 onPointerEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
                 onClick={() => setActive(i)}
-                className={`display flex items-center justify-between px-5 py-4 text-left text-xl uppercase transition-colors md:text-2xl ${
+                className={`display flex min-w-0 items-center justify-between gap-2 px-5 py-4 text-left text-xl uppercase transition-colors md:text-2xl ${
                   active === i
                     ? "bg-lime text-background"
                     : "bg-background text-foreground hover:text-lime"
                 }`}
               >
-                {m.name}
-                <span className="font-sans text-[10px] tracking-[0.3em] opacity-60">
+                <span className="truncate">{m.name}</span>
+                <span className="shrink-0 font-sans text-[10px] tracking-[0.3em] opacity-60">
                   {String(i + 1).padStart(2, "0")}
                 </span>
               </button>
@@ -346,7 +346,24 @@ export function Production() {
           </div>
         </div>
 
-        <div className="relative aspect-4/5 overflow-hidden border border-border lg:aspect-square">
+        {/* mobile: swipeable material chips */}
+        <div className="order-2 -mx-5 mt-6 flex snap-x gap-2 overflow-x-auto px-5 pb-1 sm:hidden">
+          {materials.map((m, i) => (
+            <button
+              key={m.name}
+              onClick={() => setActive(i)}
+              className={`shrink-0 snap-start border px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] transition-colors ${
+                active === i
+                  ? "border-lime bg-lime text-background"
+                  : "border-border text-muted-foreground"
+              }`}
+            >
+              {m.name}
+            </button>
+          ))}
+        </div>
+
+        <div className="relative order-3 aspect-4/3 overflow-hidden border border-border sm:aspect-4/5 lg:order-2 lg:aspect-square">
           {materials.map((m, i) => (
             <img
               key={m.name}
@@ -359,9 +376,9 @@ export function Production() {
             />
           ))}
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-          <div className="absolute bottom-6 left-6 flex items-baseline gap-4">
-            <span className="display text-4xl text-lime md:text-6xl">{material.name}</span>
-            <span className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
+          <div className="absolute bottom-4 left-4 flex min-w-0 items-baseline gap-3 md:bottom-6 md:left-6 md:gap-4">
+            <span className="display truncate text-3xl text-lime md:text-6xl">{material.name}</span>
+            <span className="shrink-0 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
               Workshop
             </span>
           </div>
