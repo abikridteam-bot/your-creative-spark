@@ -164,3 +164,36 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.marquee-reverse {
+  animation: marquee 32s linear infinite reverse;
+  will-change: transform;
+}
+
+.spin-slow {
+  animation: spin-slow 18s linear infinite;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pulse-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.7); }
+}
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-lime);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track, .marquee-reverse, .spin-slow, .pulse-dot { animation: none; }
+}

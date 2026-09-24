@@ -14,6 +14,7 @@ import {
   Contact,
   Footer,
   Intro,
+  Marquee,
   Process,
   Production,
   ServicesList,
@@ -73,6 +74,7 @@ function Index() {
       <main>
         <Hero />
         <Intro />
+        <Marquee />
         <ServicesList />
         <Work />
         <Stats />
