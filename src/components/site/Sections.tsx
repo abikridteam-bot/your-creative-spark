@@ -430,7 +430,7 @@ export function About() {
       stagger: 0.12,
       duration: 1,
       ease: "power3.out",
-      scrollTrigger: { trigger: el.querySelector(".pillars"), start: "top 85%" },
+      scrollTrigger: { trigger: el, start: "top 40%" },
     });
   });
   return (
@@ -461,7 +461,7 @@ export function About() {
           </p>
           <div className="pillars mt-12 border-t border-border">
             {pillars.map((p, i) => (
-              <div key={p.t} className="pillar group flex items-baseline gap-6 border-b border-border py-6 transition-all duration-500 hover:pl-4">
+              <div key={p.t} className="pillar group flex items-baseline gap-6 border-b border-border py-6 transition-[padding] duration-500 hover:pl-4">
                 <span className="font-sans text-[10px] tracking-[0.4em] text-lime">{String(i + 1).padStart(2, "0")}</span>
                 <div className="flex-1">
                   <span className="display text-2xl transition-colors duration-500 group-hover:text-lime md:text-3xl">{p.t}</span>
