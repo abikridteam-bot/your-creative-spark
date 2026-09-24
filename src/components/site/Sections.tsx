@@ -342,8 +342,8 @@ export function Stats() {
       scrollTrigger: { trigger: el, start: "top 75%" },
     });
     el.querySelectorAll<HTMLElement>(".count").forEach((n) => {
-      const target = Number(n.dataset.v);
-      const pad = Number(n.dataset.pad ?? 0);
+      const target = Number(n.dataset['v']);
+      const pad = Number(n.dataset['pad'] ?? 0);
       const o = { v: 0 };
       gsap.to(o, {
         v: target,
