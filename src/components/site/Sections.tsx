@@ -22,7 +22,14 @@ function useGsap<T extends HTMLElement>(fn: (el: T) => void, deps: unknown[] = [
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const ctx = gsap.context(() => fn(el), el);
-    return () => ctx.revert();
+    const t = window.setTimeout(() => ScrollTrigger.refresh(), 600);
+    const onLoad = () => ScrollTrigger.refresh();
+    window.addEventListener("load", onLoad);
+    return () => {
+      window.clearTimeout(t);
+      window.removeEventListener("load", onLoad);
+      ctx.revert();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
   return ref;
